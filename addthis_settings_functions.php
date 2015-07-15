@@ -19,6 +19,8 @@
  * +--------------------------------------------------------------------------+
  */
 
+require_once('addthis_custom_posts.php');
+
 /**
  * Get the list of styles
  */
@@ -440,8 +442,17 @@ function _addthis_deprecated_fields() {
  */
 function _addthis_determine_template_type() {
     global $post;
+    global $globalCustomPosts;
+    $type = false;
 
     // determine page type
+
+    foreach($globalCustomPosts as $customType) {
+        if ($customType['fieldName'] == get_post_type()) {
+            return get_post_type();
+        }
+    }
+
     if (is_home() || is_front_page()) {
         $type = 'home';
     } elseif (is_archive()) {
@@ -453,8 +464,6 @@ function _addthis_determine_template_type() {
         $type = 'pages';
     } elseif (is_single()) {
         $type = 'posts';
-    } else {
-        $type = false;
     }
 
     return $type;

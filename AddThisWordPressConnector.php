@@ -247,7 +247,9 @@ if (!class_exists('AddThisWordpressConnector')) {
                     'explanation'  => 'A condensed description of your post or page. These are often displayed in search results, RSS feeds, and sometimes on Archive or Category views. Important: Excerpts will only work some of the time with some themes, depending on how that theme retrieves your content.',
                 ),
             );
-            return $options;
+
+            global $globalCustomPosts;
+            return array_merge($options, $globalCustomPosts);
         }
 
         public function isUpgrade() {
